@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model ProjectsViewModel
+<!--Lists out my books-->
+@foreach (Book b in Model.Book)
+{
+    <div class="card card-outline-primary m-1 p-1">
+        <div class="bg-faded p-1">
+            <h4>
+                @b.Title
+            </h4>
+                <ul>
+                    <li>Author: @b.Author</li>
+                    <li>Publisher: @b.Publisher</li>
+                    <li>ISBN: @b.Isbn served</li>
+                    <li>Classification: @b.Classification</li>
+                    <li>Category: @b.Category</li>
+                    <li>Number of Pages: @b.PageCount</li>
+                    <li>Price: @b.Price</li>
+                </ul>
+        </div>
+    </div>
+}
+<br />
+<!--Links to the different Pagination pages-->
+<div page-blah="@Model.PageInfo" page-action="Index" page-classes-enabled="true"
+     page-class="btn" page-class-normal="btn-outline-dark"
+     page-class-selected="btn-primary" class="btn-group pull-right m-1"></div>
