@@ -4,26 +4,11 @@
 @{
 }
 
-@model ProjectsViewModel
+@model BooksViewModel
 <!--Lists out my books-->
 @foreach (Book b in Model.Book)
 {
-    <div class="card card-outline-primary m-1 p-1">
-        <div class="bg-faded p-1">
-            <h4>
-                @b.Title
-            </h4>
-                <ul>
-                    <li>Author: @b.Author</li>
-                    <li>Publisher: @b.Publisher</li>
-                    <li>ISBN: @b.Isbn served</li>
-                    <li>Classification: @b.Classification</li>
-                    <li>Category: @b.Category</li>
-                    <li>Number of Pages: @b.PageCount</li>
-                    <li>Price: @b.Price</li>
-                </ul>
-        </div>
-    </div>
+    <partial name="BookSummary" model="b"/>
 }
 <br />
 <!--Links to the different Pagination pages-->

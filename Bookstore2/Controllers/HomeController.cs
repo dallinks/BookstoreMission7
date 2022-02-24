@@ -22,7 +22,7 @@ namespace Bookstore2.Controllers
         {
             int pageSize = 10;
 
-            var x = new ProjectsViewModel
+            var x = new BooksViewModel
             {
                 Book = context.Books
                 .Skip((pageNum - 1) * pageSize)
