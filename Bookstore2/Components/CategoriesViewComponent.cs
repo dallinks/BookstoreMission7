@@ -17,11 +17,12 @@ namespace Bookstore2.Components
 
         public IViewComponentResult Invoke()
         {
+            ViewBag.SelectedCategory = RouteData?.Values["category"];
             var categories = repo.Books
-                .Select(x => x.Category)
+                .Select(s => s.Category)
                 .Distinct()
                 .OrderBy(x => x);
-            return View();
+            return View(categories);
         }
     }
 }

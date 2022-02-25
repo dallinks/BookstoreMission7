@@ -18,18 +18,22 @@ namespace Bookstore2.Controllers
             context = temp;
         }
 
-        public IActionResult Index(int pageNum = 1)
+        public IActionResult Index(string Category, int pageNum = 1)
         {
             int pageSize = 10;
 
             var x = new BooksViewModel
             {
                 Book = context.Books
+                .Where(x => x.Category == Category || Category == null)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
                 PageInfo = new PageInfo
                 {
-                    TotalNumProjects = context.Books.Count(),
+                    TotalNumProjects = 
+                    (Category == null
+                        ? context.Books.Count()
+                        :context.Books.Where(x=>x.Category == Category).Count()),
                     ProjectsPerPage = pageSize,
                     CurrentPage = pageNum
                 }

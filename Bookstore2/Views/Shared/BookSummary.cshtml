@@ -17,10 +17,18 @@
     <ul>
         <li>Author: @Model.Author</li>
         <li>Publisher: @Model.Publisher</li>
-        <li>ISBN: @Model.Isbn served</li>
+        <li>ISBN: @Model.Isbn</li>
         <li>Classification: @Model.Classification</li>
         <li>Number of Pages: @Model.PageCount</li>
         <li>Price: @Model.Price</li>
     </ul>
-    
+
+    <form method="post" asp-page="/Cart">
+        <input type="hidden" asp-for="@Model.BookId" />
+        <input type="hidden" name="returnURL" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+        <span class="card-text">
+            <button type="submit" class="btn btn-success btn-sm float-right">Add to Cart</button>
+        </span>
+    </form>
 </div>
+
