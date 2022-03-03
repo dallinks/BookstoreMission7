@@ -1,6 +1,7 @@
 using Bookstore2.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -21,7 +22,7 @@ namespace Bookstore2
             Configuration = configuration;
         }
 
-       
+
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -34,6 +35,8 @@ namespace Bookstore2
             services.AddRazorPages();
             services.AddDistributedMemoryCache();
             services.AddSession();
+            services.AddScoped<Cart>(x => SessionCart.GetCart(x));
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +64,7 @@ namespace Bookstore2
                 endpoints.MapControllerRoute(
                     name: "categoryPage",
                     pattern: "{category}/Page{pageNum}",
-                    defaults: new {Controller = "Home", action = "Index"}
+                    defaults: new { Controller = "Home", action = "Index" }
                     );
 
                 endpoints.MapControllerRoute(
@@ -73,7 +76,7 @@ namespace Bookstore2
                 endpoints.MapControllerRoute(
                     name: "category",
                     pattern: "{category}",
-                    defaults: new { Controller = "Home", action = "Index", pageNum=1 }
+                    defaults: new { Controller = "Home", action = "Index", pageNum = 1 }
                     );
 
                 endpoints.MapDefaultControllerRoute();

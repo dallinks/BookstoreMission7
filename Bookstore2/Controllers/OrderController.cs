@@ -26,16 +26,16 @@ namespace Bookstore2.Controllers
         [HttpPost]
         public IActionResult Checkout(Order order)
         {
-            if(cart.Items.Count() == 0)
+            if (cart.Items.Count() == 0)
             {
                 ModelState.AddModelError("", "Sorry, your basket is empty!");
             }
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 order.Lines = cart.Items.ToArray();
 
                 context.AttachRange(order.Lines.Select(x => x.Book));
-                if(order.DonationId == 0)
+                if (order.DonationId == 0)
                 {
                     context.Orders.Add(order);
                 }
