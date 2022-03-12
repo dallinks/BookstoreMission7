@@ -113,7 +113,11 @@ namespace Bookstore2.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PhoneNumber")
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Shipped")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("State")

@@ -31,5 +31,7 @@ namespace Bookstore2.Models
         [Required(ErrorMessage ="Please enter phone number")]
         [Phone]
         public string PhoneNumber { get; set; }
+        [BindNever]
+        public bool Shipped { get; set; }
     }
 }

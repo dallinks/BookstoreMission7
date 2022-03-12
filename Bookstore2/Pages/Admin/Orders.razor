@@ -1,0 +1,35 @@
+﻿@page "/admin/orders"
+@inherits OwningComponentBase<BookstoreContext>
+
+<OrderTable TableTitle="Unshipped" Orders="UnshippedOrders"
+            ButtonLabel="Shipped" OrderSelected="ShipOrder"></OrderTable>
+<OrderTable TableTitle="Shipped" Orders="ShippedOrders"
+            ButtonLabel="Reset" OrderSelected="ResetOrder"></OrderTable>
+
+<button class="btn btn-info" @onclick="@(x => UpdateData())">Refresh Orders</button>
+
+@code{
+    public BookstoreContext context => Service;
+    public IEnumerable<Order> AllOrders { get; set; }
+    public IEnumerable<Order> UnshippedOrders { get; set; }
+    public IEnumerable<Order> ShippedOrders { get; set; }
+
+    protected async override Task OnInitializedAsync()
+    {
+        await UpdateData();
+    }
+    public async Task UpdateData()
+    {
+        AllOrders = await context.Orders.ToListAsync();
+        UnshippedOrders = AllOrders.Where(x => !x.Shipped);
+        ShippedOrders = AllOrders.Where(x => x.Shipped);
+    }
+    public void ShipOrder(int id) => UpdateOrder(id, true);
+    public void ResetOrder(int id) => UpdateOrder(id, false);
+    private void UpdateOrder (int id, bool ordered)
+    {
+        Order d = context.Orders.FirstOrDefault(x => x.DonationId == id);
+        d.Shipped = ordered;
+        context.SaveChanges();
+    }
+}
