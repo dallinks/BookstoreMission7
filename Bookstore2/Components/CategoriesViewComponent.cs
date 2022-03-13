@@ -9,8 +9,8 @@ namespace Bookstore2.Components
 {
     public class CategoriesViewComponent : ViewComponent
     {
-        private BookstoreContext repo { get; set; }
-        public CategoriesViewComponent (BookstoreContext temp)
+        private IStoreRepository repo { get; set; }
+        public CategoriesViewComponent (IStoreRepository temp)
         {
             repo = temp;
         }

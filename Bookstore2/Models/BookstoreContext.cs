@@ -31,37 +31,5 @@ namespace Bookstore2.Models
             }
         }
         //Left this stuff in bc it isn't hurting anyone
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Book>(entity =>
-            {
-                entity.HasKey(e => e.BookId);
-
-                entity.HasIndex(e => e.BookId)
-                    .IsUnique();
-
-                entity.Property(e => e.BookId)
-                    .HasColumnName("BookID")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Author).IsRequired();
-
-                entity.Property(e => e.Category).IsRequired();
-
-                entity.Property(e => e.Classification).IsRequired();
-
-                entity.Property(e => e.Isbn)
-                    .IsRequired()
-                    .HasColumnName("ISBN");
-
-                entity.Property(e => e.Publisher).IsRequired();
-
-                entity.Property(e => e.Title).IsRequired();
-            });
-
-            OnModelCreatingPartial(modelBuilder);
-        }
-
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
     }
 }

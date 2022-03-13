@@ -10,12 +10,11 @@ namespace Bookstore2.Controllers
 {
     public class OrderController : Controller
     {
-        private BookstoreContext context { get; set; }
+        private IOrderRepository repository { get; set; }
         private Cart cart { get; set; }
-        public IQueryable<Order> Orders => context.Orders.Include(x => x.Lines).ThenInclude(x => x.Book);
-        public OrderController(BookstoreContext temp, Cart c)
+        public OrderController(IOrderRepository temp, Cart c)
         {
-            context = temp;
+            repository = temp;
             cart = c;
         }
         [HttpGet]
@@ -34,13 +33,7 @@ namespace Bookstore2.Controllers
             {
                 order.Lines = cart.Items.ToArray();
 
-                context.AttachRange(order.Lines.Select(x => x.Book));
-                if (order.DonationId == 0)
-                {
-                    context.Orders.Add(order);
-                }
-
-                context.SaveChanges();
+                repository.SaveOrder(order);
 
                 cart.ClearCart();
                 return RedirectToPage("/OrderConfirmation");

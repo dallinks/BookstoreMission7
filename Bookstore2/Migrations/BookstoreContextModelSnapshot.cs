@@ -19,7 +19,7 @@ namespace Bookstore2.Migrations
             modelBuilder.Entity("Bookstore2.Models.Book", b =>
                 {
                     b.Property<long>("BookId")
-                        .HasColumnName("BookID")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Author")
@@ -36,7 +36,6 @@ namespace Bookstore2.Migrations
 
                     b.Property<string>("Isbn")
                         .IsRequired()
-                        .HasColumnName("ISBN")
                         .HasColumnType("TEXT");
 
                     b.Property<long>("PageCount")
@@ -54,9 +53,6 @@ namespace Bookstore2.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("BookId");
-
-                    b.HasIndex("BookId")
-                        .IsUnique();
 
                     b.ToTable("Books");
                 });

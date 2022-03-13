@@ -12,10 +12,10 @@ namespace Bookstore2.Controllers
 {
     public class HomeController : Controller
     {
-        private BookstoreContext context { get; set; }
-        public HomeController (BookstoreContext temp)
+        private IStoreRepository repository;
+        public HomeController(IStoreRepository repo)
         {
-            context = temp;
+            repository = repo;
         }
 
         public IActionResult Index(string Category, int pageNum = 1)
@@ -24,7 +24,7 @@ namespace Bookstore2.Controllers
 
             var x = new BooksViewModel
             {
-                Book = context.Books
+                Book = repository.Books
                 .Where(x => x.Category == Category || Category == null)
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize),
@@ -32,14 +32,14 @@ namespace Bookstore2.Controllers
                 {
                     TotalNumProjects = 
                     (Category == null
-                        ? context.Books.Count()
-                        :context.Books.Where(x=>x.Category == Category).Count()),
+                        ? repository.Books.Count()
+                        :repository.Books.Where(x=>x.Category == Category).Count()),
                     ProjectsPerPage = pageSize,
                     CurrentPage = pageNum
                 }
             };
 
-            var blah = context.Books.ToList()
+            var blah = repository.Books.ToList()
                 .Skip((pageNum - 1) * pageSize)
                 .Take(pageSize);
             return View(x);

@@ -1,5 +1,5 @@
 ﻿@page "/admin/orders"
-@inherits OwningComponentBase<BookstoreContext>
+@inherits OwningComponentBase<IOrderRepository>
 
 <OrderTable TableTitle="Unshipped" Orders="UnshippedOrders"
             ButtonLabel="Shipped" OrderSelected="ShipOrder"></OrderTable>
@@ -9,7 +9,7 @@
 <button class="btn btn-info" @onclick="@(x => UpdateData())">Refresh Orders</button>
 
 @code{
-    public BookstoreContext context => Service;
+    public IOrderRepository context => Service;
     public IEnumerable<Order> AllOrders { get; set; }
     public IEnumerable<Order> UnshippedOrders { get; set; }
     public IEnumerable<Order> ShippedOrders { get; set; }
@@ -30,6 +30,6 @@
     {
         Order d = context.Orders.FirstOrDefault(x => x.DonationId == id);
         d.Shipped = ordered;
-        context.SaveChanges();
+        context.SaveOrder(d);
     }
 }

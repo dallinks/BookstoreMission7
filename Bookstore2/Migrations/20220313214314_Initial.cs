@@ -10,11 +10,12 @@ namespace Bookstore2.Migrations
                 name: "Books",
                 columns: table => new
                 {
-                    BookID = table.Column<long>(nullable: false),
+                    BookId = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(nullable: false),
                     Author = table.Column<string>(nullable: false),
                     Publisher = table.Column<string>(nullable: false),
-                    ISBN = table.Column<string>(nullable: false),
+                    Isbn = table.Column<string>(nullable: false),
                     Classification = table.Column<string>(nullable: false),
                     Category = table.Column<string>(nullable: false),
                     PageCount = table.Column<long>(nullable: false),
@@ -22,7 +23,7 @@ namespace Bookstore2.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.BookID);
+                    table.PrimaryKey("PK_Books", x => x.BookId);
                 });
 
             migrationBuilder.CreateTable(
@@ -64,7 +65,7 @@ namespace Bookstore2.Migrations
                         name: "FK_CartLineItem_Books_BookId",
                         column: x => x.BookId,
                         principalTable: "Books",
-                        principalColumn: "BookID",
+                        principalColumn: "BookId",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CartLineItem_Orders_OrderDonationId",
@@ -73,12 +74,6 @@ namespace Bookstore2.Migrations
                         principalColumn: "DonationId",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_BookID",
-                table: "Books",
-                column: "BookID",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_CartLineItem_BookId",
