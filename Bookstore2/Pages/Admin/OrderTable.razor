@@ -7,7 +7,7 @@
     <tbody>
         @if(Orders?.Count() > 0)
             {
-                foreach(Order d in Orders)
+                @foreach(Order d in Orders)
                 {
                     <tr>
                         <td>@d.Name</td>
